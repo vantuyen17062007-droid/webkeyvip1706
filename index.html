@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEY TOOL NGÀY HÔM NAY</title>
+
+<style>
+
+/* ===== NỀN SẠCH — KHÔNG ẢNH ===== */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url('eren.jpg') no-repeat center center/cover;
+    filter: blur(5px) brightness(0.6);
+
+    z-index: -1;
+}
+body {
+    margin: 0;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+/* ===== KHUNG CHÍNH GLOW ===== */
+/*.container{
+    width:90%;
+    max-width:420px;
+    padding:25px;
+
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px);
+
+    border:2px solid #ff3f8e;
+    border-radius:16px;
+
+    box-shadow:
+        0 0 25px #ff3f8e,
+        inset 0 0 20px #ff3f8e;
+}*/
+.container {
+    width: 90%;
+    max-width: 400px;
+
+    padding: 20px;
+    border-radius: 15px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.2); /* nền mờ */
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+
+    margin: auto;
+}
+/* ===== TITLE ===== */
+.title{
+    text-align:center;
+    font-size:22px;
+    color:#00ffe7;
+
+    text-shadow:
+        0 0 12px #00e1ff,
+        0 0 25px #00b8ff;
+
+    margin-bottom:20px;
+}
+
+/* ===== INPUT ===== */
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:2px solid #0ff;
+
+    background: rgba(0,0,0,0.5);
+    color:#0ff;
+
+    font-size:18px;
+    text-align:center;
+    box-sizing: border-box;
+    box-shadow:0 0 15px #00eaff;
+}
+* {
+    box-sizing: border-box;
+}
+
+/* ===== BUTTON ===== */
+button{
+    width:100%;
+    margin-top:12px;
+    padding:12px;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:16px;
+    cursor:pointer;
+    color:white;
+
+    background:linear-gradient(45deg,#ff0066,#ff2ea6);
+
+    box-shadow:
+        0 0 15px #ff2ea6,
+        0 0 30px #ff007f;
+
+    transition:0.25s;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+/* ===== DATE ===== */
+.date{
+    margin-top:12px;
+    text-align:center;
+    color:#0ff;
+    text-shadow:0 0 10px #00eaff;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+    margin-top:15px;
+    text-align:center;
+    color:#00ffe7; /* màu xanh neon */
+}
+
+.footer a{
+    color:#4a1bc1;
+    text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">KEY NGÀY HÔM NAY LÀ</div>
+
+<input id="keyInput" readonly>
+
+<button onclick="copyKey()">📋 Copy Key</button>
+<button onclick="toggleMusic()" id="musicBtn">🎵 Nghe Nhạc</button>
+
+<div class="date" id="dateText"></div>
+
+<div class="footer">
+© By <a href="https://zalo.me/0394284616">Đinh Văn Tuyên</a><br>
+Time: <span id="clock"></span>
+</div>
+
+</div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function updateTime(){
+    const d = new Date()
+
+    const hh = String(d.getHours()).padStart(2,"0")
+    const mm = String(d.getMinutes()).padStart(2,"0")
+    const ss = String(d.getSeconds()).padStart(2,"0")
+
+    document.getElementById("clock").innerHTML = `${hh}:${mm}:${ss}`
+    document.getElementById("dateText").innerHTML =
+        `HÔM NAY: ${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+}
+
+setInterval(updateTime,1000)
+updateTime()
+
+function getKey(){
+    const k = new URLSearchParams(location.search).get("ma")
+    document.getElementById("keyInput").value =
+        k ? k : "Bạn chưa lấy key"
+}
+getKey()
+
+function copyKey(){
+    const i = document.getElementById("keyInput")
+    i.select()
+    document.execCommand("copy")
+    alert("Đã copy key: " + i.value)
+}
+
+function toggleMusic(){
+    const m = document.getElementById("music")
+    const b = document.getElementById("musicBtn")
+
+    if(m.paused){
+        m.play()
+        b.innerText="⏸ Dừng Nhạc"
+    }else{
+        m.pause()
+        b.innerText="🎵 Nghe Nhạc"
+    }
+}
+
+</script>
+
+</body>
+</html>
