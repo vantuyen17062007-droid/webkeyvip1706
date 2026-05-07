@@ -186,13 +186,38 @@ function updateTime(){
 setInterval(updateTime,1000)
 updateTime()
 
-function getKey(){
+/*function getKey(){
     const k = new URLSearchParams(location.search).get("ma")
     document.getElementById("keyInput").value =
         k ? k : "Bạn chưa lấy key"
 }
-getKey()
+getKey()*/
+function getKey(){
 
+    const encoded = new URLSearchParams(location.search).get("ma")
+
+    if(encoded){
+
+        try{
+
+            // giải mã Base64
+            const decoded = atob(encoded)
+
+            document.getElementById("keyInput").value = decoded
+
+        }catch{
+
+            document.getElementById("keyInput").value = "Key lỗi"
+
+        }
+
+    }else{
+
+        document.getElementById("keyInput").value = "Bạn chưa lấy key"
+
+    }
+}
+getKey()
 function copyKey(){
     const i = document.getElementById("keyInput")
     i.select()
